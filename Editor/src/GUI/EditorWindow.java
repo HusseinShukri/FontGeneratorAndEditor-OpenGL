@@ -21,7 +21,7 @@ import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLException;
 import com.jogamp.opengl.GLProfile;
 
-import Model.JOGL.CanvasEditorJOGL;
+import Model.GLCanvas.CanvasEditorJOGL;
 import Utility.FileUtility;
 
 import javax.swing.event.ChangeEvent;
@@ -101,6 +101,7 @@ public class EditorWindow {
 		aboutMenu.add(txtArea);
 
 		JoglPanel = new JPanel();
+		JoglPanel.requestFocus();
 		JoglPanel.setBounds(20, 42, 697, 611);
 		frmEditor.getContentPane().add(JoglPanel);
 
@@ -228,9 +229,7 @@ public class EditorWindow {
 		try {
 			if (fileChooser.showOpenDialog(loadButton) == JFileChooser.APPROVE_OPTION) {
 				String path = fileChooser.getSelectedFile().getAbsolutePath();
-				System.out.println(path);
-				editorJOGL.setPaperSheet(FileUtility.GetFontDtoBottomDown(path), lineSpacing, JoglPanel.getWidth(),
-						JoglPanel.getHeight());
+				editorJOGL.setFont(FileUtility.GetFontDto(path));
 			}
 
 		} catch (Exception e) {
@@ -244,23 +243,22 @@ public class EditorWindow {
 		setFontColor(R, G, B);
 	}
 
-	private void setFontColor(float r, float g, float b) {
+	private void setFontColor(int r, int g, int b) {
 		editorJOGL.setFontColor(r, g, b);
 	}
 
 	private void JOGLSetup() throws GLException, Exception {
 		editorJOGL = new CanvasEditorJOGL(new GLCapabilities(GLProfile.get(GLProfile.GL2)),
-				FileUtility.GetFontDtoBottomDown("resources/Hussein.font"), lineSpacing, JoglPanel.getWidth(),
-				JoglPanel.getHeight());
+				FileUtility.GetFontDto("resources/Hussein.font"), JoglPanel.getWidth(), JoglPanel.getHeight());
 
-		JoglPanel.add(editorJOGL.getSheetCanvas());
+		JoglPanel.add(editorJOGL.getCanvas());
 	}
 
 	private String getAboutText() {
 		return "  Editor Program Written by Hussein Shukri as Project for my college graphics course   \n "
-			  +"  You can find The code source on my github account github.com/HusseinShukri  \n"
-			  +"  Or you can follow the link below";
-		
+				+ "  You can find The code source on my github account github.com/HusseinShukri  \n"
+				+ "  Or you can follow the link below  \n" + "    \n" + "   ";
+
 	}
 
 	public JFrame getFrame() {
