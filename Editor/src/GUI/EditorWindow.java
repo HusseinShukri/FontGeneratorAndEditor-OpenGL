@@ -72,7 +72,7 @@ public class EditorWindow {
 
 			@Override
 			public boolean accept(File f) {
-				if (f.isDirectory())
+				if (f.isDirectory()) 
 					return true;
 				else if (f.getName().endsWith(".font"))
 					return true;
